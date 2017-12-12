@@ -9,10 +9,10 @@
   <body>
     <div id="root"></div>
 
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/jquery@3.2.1/dist/jquery.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
     <script type="text/jsx">
       class App extends React.Component {
@@ -27,12 +27,11 @@
         }
 
         handleInput = (e) => {
-          this.setState({ username: e.target.value });
+          this.setState({username: e.target.value});
         }
 
         render() {
-          const errors = this.state.error;
-
+          const error = this.state.error;
           const repos = this.state.results.map(repo => (
             <li key={repo.id}><a href={repo.clone_url}>{repo.name}</a></li>
           ));
@@ -45,10 +44,10 @@
                   value={this.state.username}
                   onChange={this.handleInput}
                   />
-                <button>Get results</button>
+                <button>Get Repos</button>
               </form>
 
-              <div style={{color: "red"}}>{errors}</div>
+              <div style={{color: "red"}}>{error}</div>
 
               <ul>
                 {repos}
