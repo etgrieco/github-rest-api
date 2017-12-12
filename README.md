@@ -1,6 +1,6 @@
 # Github REST API Demo:
 
-* [Live Demo](etgrieco.github.io/github-rest-api)
+* [Live Demo](http://etgrieco.github.io/github-rest-api)
 
 # Description:
 
