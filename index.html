@@ -33,7 +33,9 @@
         render() {
           const error = this.state.error;
           const repos = this.state.results.map(repo => (
-            <li key={repo.id}><a href={repo.clone_url}>{repo.name}</a></li>
+            <li key={repo.id}>
+              <a href={repo.clone_url} target="__blank">{repo.name}</a>
+            </li>
           ));
 
           return (
