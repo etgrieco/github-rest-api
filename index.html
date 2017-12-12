@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Achievement First: REST Api</title>
+  </head>
+
+
+  <body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/jquery@3.2.1/dist/jquery.js"></script>
+
+    <script type="text/jsx">
+      class App extends React.Component {
+        state = {username: "", results: [], error: ""};
+
+        handleQuery = (e) => {
+          e.preventDefault();
+          apiRequest(this.state.username).then(
+            response => this.setState({results: response, error: ""}),
+            error => this.setState({error: error.statusText, results: []})
+          );
+        }
+
+        handleInput = (e) => {
+          this.setState({ username: e.target.value });
+        }
+
+        render() {
+          console.log(this.state)
+
+          const errors = this.state.error;
+
+          const repos = this.state.results.map(repo => (
+            <li key={repo.id}><a href={repo.clone_url}>{repo.name}</a></li>
+          ));
+
+          return (
+            <div>
+              <h1>List User Repositories Github REST API Demo</h1>
+              <form onSubmit={this.handleQuery}>
+                <input placeholder="enter a username"
+                  value={this.state.username}
+                  onChange={this.handleInput}
+                  />
+                <button>Get results</button>
+              </form>
+
+              <div style={{color: "red"}}>{errors}</div>
+
+              <ul>
+                {repos}
+              </ul>
+            </div>
+          );
+        }
+      }
+
+      function apiRequest(username) {
+        return $.ajax({
+          type: "GET",
+          url: `https://api.github.com/users/${username}/repos`
+        });
+      }
+
+      const root = document.getElementById("root");
+      ReactDOM.render(<App />, root);
+    </script>
+
+  </body>
+
+</html>
