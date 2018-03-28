@@ -11,8 +11,8 @@
 
     <script src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/jquery@3.2.1/dist/jquery.js"></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script type="text/jsx">
       class App extends React.Component {
@@ -21,8 +21,9 @@
         handleQuery = (e) => {
           e.preventDefault();
           apiRequest(this.state.username).then(
-            response => this.setState({results: response, error: ""}),
-            error => this.setState({error: error.statusText, results: []})
+            response => { this.setState({results: response.data, error: ""}); }
+          ).catch(
+            error => { this.setState({error: error.response.statusText, results: []}) }
           );
         }
 
@@ -60,10 +61,7 @@
       }
 
       function apiRequest(username) {
-        return $.ajax({
-          type: "GET",
-          url: `https://api.github.com/users/${username}/repos`
-        });
+        return axios.get(`https://api.github.com/users/${username}/repos`);
       }
 
       const root = document.getElementById("root");
